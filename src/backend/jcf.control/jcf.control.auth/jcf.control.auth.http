@@ -1,6 +1,0 @@
-@jcf.control.auth_HostAddress = http://localhost:5039
-
-GET {{jcf.control.auth_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
