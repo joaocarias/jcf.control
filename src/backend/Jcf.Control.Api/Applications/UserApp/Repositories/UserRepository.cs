@@ -85,7 +85,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
         {
             try
             {
-                var result = await _appDapperContext.Connection.QueryFirstOrDefaultAsync<Entities.User>(
+                var result = await _appDapperContext.Connection.QueryFirstOrDefaultAsync<User>(
                    UserQuery.GET,
                    new { Id = id },
                    _appDapperContext.Transaction

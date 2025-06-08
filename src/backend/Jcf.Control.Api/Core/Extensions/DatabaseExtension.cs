@@ -1,5 +1,6 @@
 ﻿using Jcf.Control.Api.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Jcf.Control.Api.Core.Extensions
 {
@@ -16,7 +17,8 @@ namespace Jcf.Control.Api.Core.Extensions
 
                 if (environment.IsDevelopment())
                 {
-                    options.UseLoggerFactory(consoleLogger).EnableDetailedErrors();
+                    options.UseLoggerFactory(consoleLogger).EnableDetailedErrors();                   
+                    options.ConfigureWarnings(warnings => warnings.Log(RelationalEventId.PendingModelChangesWarning));
                 }
             });
 

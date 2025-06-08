@@ -15,7 +15,7 @@ namespace Jcf.Control.Api.Core.Entities
         public bool IsActive { get; private set; } = true;
 
         [Required]
-        public DateTime CreateAt { get; private set; } = DateTime.Now;
+        public DateTime CreateAt { get; private set; } = DateTime.UtcNow;
 
         [ForeignKey(nameof(UserCreateId))]
         public User? UserCreate { get; private set; }
