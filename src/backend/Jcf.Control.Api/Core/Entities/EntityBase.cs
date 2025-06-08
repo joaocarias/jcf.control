@@ -46,5 +46,11 @@ namespace Jcf.Control.Api.Core.Entities
             IsActive = false;
             UserUpdateId = userUpdateId;
         }
+
+        public void Edit(Guid? userUpdateId)
+        {
+            UpdateAt = DateTime.UtcNow;
+            UserUpdateId = userUpdateId;
+        }
     }
 }

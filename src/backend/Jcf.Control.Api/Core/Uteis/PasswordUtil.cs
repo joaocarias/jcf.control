@@ -4,6 +4,8 @@ namespace Jcf.Control.Api.Core.Uteis
 {
     public static class PasswordUtil
     {
+        public static string PasswordDefault = "10203040";
+
         public static string RandomPassoword(int length = 8)
         {
             string chars = "abcdefghjkmnpqrstuvwxyz0123456789";

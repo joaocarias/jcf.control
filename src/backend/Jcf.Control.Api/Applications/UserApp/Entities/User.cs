@@ -79,5 +79,14 @@ namespace Jcf.Control.Api.Applications.UserApp.Entities
                 UserUpdateId
             );
         }
+
+        public void Edit(string name, string email, string password, string login, Guid? userUpdate) 
+        {
+            Name = name ?? string.Empty;
+            Email = email ?? string.Empty;
+            Password = password ?? string.Empty;
+            Login = login ?? string.Empty;           
+            base.Edit(userUpdate);
+        }
     }
 }
