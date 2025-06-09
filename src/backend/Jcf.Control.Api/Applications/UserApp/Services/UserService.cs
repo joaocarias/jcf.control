@@ -44,11 +44,11 @@ namespace Jcf.Control.Api.Applications.UserApp.Services
             }
         }
 
-        public bool Delete(User user)
+        public bool Delete(User user, Guid? userUpdateId)
         {
             try
             {
-                user.Delete();
+                user.Delete(userUpdateId);
                 user = _userRepository.Update(user);
                 return user is not null && !user.IsActive; 
             }
@@ -92,7 +92,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Services
                 if(!user.Id.ValidadeIsEquals(putUser.Id))
                     return null;
 
-                user.Edit(putUser.Name, putUser.Email, putUser.Password, putUser.Login, userUpdateId);
+                user.Edit(putUser.Name, putUser.Email, PasswordUtil.CreateHashMD5(putUser.Password), putUser.Login, userUpdateId);
                 return _userRepository.Update(user);
             }
             catch (Exception ex)

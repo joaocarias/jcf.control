@@ -9,6 +9,6 @@ namespace Jcf.Control.Api.Applications.UserApp.Services.IServices
         Task<IEnumerable<User>?> GetAllAsync();
         Task<User?> CreateAsync(User user);  
         User? Update(User user, PutUser putUser, Guid? userUpdateId);
-        bool Delete(User user);
+        bool Delete(User user, Guid? userUpdateId);
     }
 }

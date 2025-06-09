@@ -7,5 +7,6 @@
         public static readonly string NOT_FOUND = "Não Encontrado";
         public static readonly string SUCCESS = "success";
         public static readonly string UPDATE_IDS_DISTINCTS = "Não é possível atualizar por IDs Informados não são iguais.";
+        public static readonly string ERROR_DELETE = "Não foi possível deletar o resgistro.";
     }
 }

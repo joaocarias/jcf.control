@@ -1,12 +1,10 @@
 ﻿using Jcf.Control.Api.Applications.UserApp.Entities;
-using Jcf.Control.Api.Applications.UserApp.Models.DTOs;
 using Jcf.Control.Api.Applications.UserApp.Models.Records;
 using Jcf.Control.Api.Applications.UserApp.Services.IServices;
 using Jcf.Control.Api.Core.Constants;
 using Jcf.Control.Api.Core.Controllers;
 using Jcf.Control.Api.Core.Models.Responses;
 using Jcf.Control.Api.Core.Uteis;
-using Microsoft.AspNetCore.Http.Timeouts;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -133,7 +131,37 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
             }
         }
 
-        // delete
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([Required] Guid id)
+        {
+            var response = new ApiResponse();
+            try
+            {
+                var user = await _userService.GetAsync(id);
+                if (user is null)
+                {
+                    response.IsBadRequest(ApiResponseConstants.NOT_FOUND);
+                    return BadRequest(response);
+                }
+
+                var _hasDelete = _userService.Delete(user, GetUserIdFromToken());
+                if( !_hasDelete)
+                {
+                    response.IsBadRequest(ApiResponseConstants.ERROR_DELETE);
+                    return BadRequest(response);
+                }
+
+                response.IsOk(null);
+                return Ok(response); 
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"[{nameof(UserController)} - {nameof(Get)}] | {ex.Message}");
+                response.IsBadRequest(ex.Message);
+                return BadRequest(response);
+            }
+        }
 
 
     }
