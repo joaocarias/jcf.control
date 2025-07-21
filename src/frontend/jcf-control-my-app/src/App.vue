@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import NavBarLadingPage from './components/navbar/NavBarLandingPage.vue'
+import LandingPage from './components/landingpage/LandingPage.vue'
 </script>
 
 <template>
-  <NavBarLadingPage />
+  <LandingPage />
 </template>
 
 <style scoped>
