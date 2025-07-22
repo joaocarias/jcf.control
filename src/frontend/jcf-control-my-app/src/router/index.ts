@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import Login from '@/pages/auth/Login.vue'
+import Home from '@/pages/dashboard/Home.vue'
 import { APP_TITLE } from '@/constants/app'
 
 const routes: RouteRecordRaw[] = [
@@ -14,7 +15,15 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: `Login | ${APP_TITLE}`
     }
-  }  
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home,
+    meta: {
+      title: `Home | ${APP_TITLE}`
+    }
+  }
 ]
 
 const router = createRouter({
