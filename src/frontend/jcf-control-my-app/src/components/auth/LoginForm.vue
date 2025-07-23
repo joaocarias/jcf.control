@@ -1,22 +1,48 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { login } from '@/services/authService'
+import { useRouter } from 'vue-router'
 
 const email = ref('')
 const password = ref('')
+const errorMessage = ref('')
+const router = useRouter()
 
-async function handleLogin() {
+const handleLogin = async () => {
+  errorMessage.value = '' // limpa erro anterior
   try {
-    const response = await login(email.value, password.value)
-    console.log('Login OK:', response.data)
-    // redirecionar, armazenar token, etc.
-  } catch (err) {
-    console.error('Erro ao fazer login', err)
+    const response = await login(email.value, password.value);
+    // Sucesso
+   // console.log('Login OK:', response.data);
+
+    if (response.data?.isSuccess) {
+      const { token, user } = response.data.result
+
+      sessionStorage.setItem('auth_token', token)
+      sessionStorage.setItem('auth_user', JSON.stringify(user))
+
+      router.push('/app')
+    } else {
+      errorMessage.value = 'Erro desconhecido ao logar.'
+    }
+  } catch (error: any) {
+    if (error.response && error.response.data) {
+      const { statusCode, errorMessages } = error.response.data;
+      console.log(`statusCode: ${statusCode} | errorMessage: ${errorMessages?.[0] || 'Erro desconhecido'}`)
+       errorMessage.value = errorMessages?.[0] || 'Erro ao fazer login.'
+    } else {
+      errorMessage.value = 'Erro ao conectar com o servidor.'
+      console.error('Erro inesperado ao tentar logar:', error)
+    }
   }
 }
 </script>
 
 <template>
+  <p v-if="errorMessage" class="text-red-400 bg-red-900/20 border border-red-500 px-4 py-2 rounded text-sm text-center mb-4">
+        {{ errorMessage }}
+    </p>
+
   <form @submit.prevent="handleLogin" class="space-y-5">
     <div>
       <label for="email" class="block text-sm text-purple-300 mb-1">Email</label>
@@ -61,5 +87,6 @@ async function handleLogin() {
     >
       ENTRAR
     </button>
+    
   </form>
 </template>
