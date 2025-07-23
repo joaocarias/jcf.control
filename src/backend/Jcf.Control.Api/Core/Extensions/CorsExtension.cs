@@ -13,7 +13,7 @@
                     builder.WithOrigins(allowedOrigins)
                            .AllowAnyMethod()
                            .AllowAnyHeader()
-                           .AllowCredentials();
+                           .AllowCredentials(); // se usar autenticação por cookies;
                 });
             });
             return services;

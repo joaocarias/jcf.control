@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { login } from '@/services/authService'
 
 const email = ref('')
 const password = ref('')
+
+async function handleLogin() {
+  try {
+    const response = await login(email.value, password.value)
+    console.log('Login OK:', response.data)
+    // redirecionar, armazenar token, etc.
+  } catch (err) {
+    console.error('Erro ao fazer login', err)
+  }
+}
 </script>
 
 <template>
-  <form class="space-y-5">
+  <form @submit.prevent="handleLogin" class="space-y-5">
     <div>
       <label for="email" class="block text-sm text-purple-300 mb-1">Email</label>
       <input

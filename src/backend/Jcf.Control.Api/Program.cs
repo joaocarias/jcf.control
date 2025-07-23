@@ -25,6 +25,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseCors("CorsPolicy");
+
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
@@ -34,7 +36,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapOpenApi();
-
-app.UseCors();
 
 app.Run();
