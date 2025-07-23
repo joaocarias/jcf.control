@@ -11,6 +11,7 @@ builder.Services.AddAuthenticationConfiguration(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddCustomOpenApi();
 builder.Services.AddCustomServices();
+builder.Services.AddCorsConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
@@ -33,5 +34,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapOpenApi();
+
+app.UseCors();
 
 app.Run();
