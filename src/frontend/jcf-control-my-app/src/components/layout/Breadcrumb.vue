@@ -1,18 +1,18 @@
 <template>
-  <nav class="text-sm text-purple-300 mb-4" aria-label="breadcrumb">
+  <nav class="text-sm text-gray-600 mb-4" aria-label="breadcrumb">
     <div class="max-w-7xl mx-auto px-4 py-2 flex items-center space-x-2">
       <!-- Ícone do breadcrumb -->
-      <i class="fas fa-angle-right text-cyan-400"></i>
+      <i class="fas fa-angle-right text-cyan-500"></i>
 
       <!-- Caminho -->
       <ol class="flex items-center flex-wrap">
         <li v-for="(item, index) in breadcrumbList" :key="index" class="flex items-center">
-          <span v-if="index !== 0" class="mx-2 text-purple-500">/</span>
+          <span v-if="index !== 0" class="mx-2 text-purple-400">/</span>
           <span
-            class="capitalize transition-colors hover:text-cyan-400"
+            class="capitalize transition-colors hover:text-cyan-600"
             :class="{ 
-              'text-cyan-400 font-semibold': index === breadcrumbList.length - 1,
-              'text-purple-300': index !== breadcrumbList.length - 1
+              'text-cyan-600 font-semibold': index === breadcrumbList.length - 1,
+              'text-gray-600': index !== breadcrumbList.length - 1
             }"
           >
             {{ item }}
