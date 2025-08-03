@@ -2,6 +2,8 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import Login from '@/pages/auth/Login.vue'
 import Home from '@/pages/dashboard/Home.vue'
 import { APP_TITLE } from '@/constants/app'
+import AdminLayout from '@/layouts/AdminLayout.vue'
+import { isAuthenticated } from '@/utils/auth'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -18,11 +20,18 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/home',
-    name: 'Home',
-    component: Home,
-    meta: {
-      title: `Home | ${APP_TITLE}`
-    }
+    component: AdminLayout,   
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '', // rota padrão de /admin
+        name: 'Home',
+        component: Home,
+        meta: {
+          title: `Home | ${APP_TITLE}`
+        }
+      }
+    ]
   }
 ]
 
@@ -37,6 +46,16 @@ router.afterEach((to) => {
     document.title = to.meta.title as string
   } else {
     document.title = APP_TITLE
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  const loggedIn = isAuthenticated()
+
+  if (to.meta.requiresAuth && !loggedIn) {
+    next({ name: 'Login' })
+  } else {
+    next()
   }
 })
 

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { login } from '@/services/authService'
 import { useRouter } from 'vue-router'
+import { loginStorage } from '@/utils/auth'
 
 const email = ref('')
 const password = ref('')
@@ -12,16 +13,11 @@ const handleLogin = async () => {
   errorMessage.value = '' // limpa erro anterior
   try {
     const response = await login(email.value, password.value);
-    // Sucesso
-   // console.log('Login OK:', response.data);
-
+   
     if (response.data?.isSuccess) {
       const { token, user } = response.data.result
-
-      sessionStorage.setItem('auth_token', token)
-      sessionStorage.setItem('auth_user', JSON.stringify(user))
-
-      router.push('/app')
+      loginStorage(token, user) // armazena token e usuário
+      router.push('/home')
     } else {
       errorMessage.value = 'Erro desconhecido ao logar.'
     }
