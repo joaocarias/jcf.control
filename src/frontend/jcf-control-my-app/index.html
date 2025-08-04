@@ -5,6 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">  
         <link href="/src/style.css" rel="stylesheet">
         <title>JCF Control App</title>
+        <script>
+            // Aplicar tema antes do carregamento da página para evitar flash
+            (function() {
+                const savedTheme = localStorage.getItem('jcf-theme')
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+                const shouldBeDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark)
+                
+                if (shouldBeDark) {
+                    document.documentElement.classList.add('dark')
+                } else {
+                    document.documentElement.classList.remove('dark')
+                }
+            })()
+        </script>
     </head>
     <body>  
         <div id="app"></div>

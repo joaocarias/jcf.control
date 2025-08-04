@@ -1,4 +1,5 @@
 ﻿using Jcf.Control.Api.Core.Constants;
+using Jcf.Control.Api.Core.Extensions;
 using Jcf.Control.Api.Core.Models.DTOs;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,6 +22,8 @@ namespace Jcf.Control.Api.Applications.UserApp.Models.DTOs
         [Required]
         [StringLength(255, MinimumLength = 3)]
         public string Role { get; set; } = RolesConstants.BASIC;
+
+        public string FirstName { get { return Name.FirstPart(); } }
 
         public UserDTO(string name, string email, string login, string role) : base()
         {
