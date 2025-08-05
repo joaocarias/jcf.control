@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import Login from '@/pages/auth/Login.vue'
 import Home from '@/pages/dashboard/Home.vue'
-import UsersList from '@/pages/users/UsersList.vue'
+import UsersList from '@/pages/registers/users/UserList.vue'
 import { APP_TITLE } from '@/constants/app'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import { isAuthenticated } from '@/utils/auth'
@@ -35,7 +35,7 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/users',
+    path: '/cadastros/usuarios',
     component: AdminLayout,
     meta: { requiresAuth: true },
     children: [

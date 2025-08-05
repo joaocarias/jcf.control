@@ -1,28 +1,7 @@
 import api from './api'
+import type { User } from '@/interfaces/Models/User'
+import type { ApiResponse } from '@/interfaces/Responses/ApiResponse'
 import { getAuthToken } from '@/utils/auth'
-
-export interface User {
-  id: string
-  name: string
-  email: string
-  login: string
-  role: string
-  firstName: string
-  isActive: boolean
-  createAt: string
-  userCreate: string | null
-  userCreateId: string | null
-  updateAt: string | null
-  userUpdate: string | null
-  userUpdateId: string | null
-}
-
-export interface ApiResponse<T> {
-  isSuccess: boolean
-  result: T
-  statusCode: number
-  errorMessages: string[]
-}
 
 // Função para obter headers com autenticação
 const getAuthHeaders = () => {

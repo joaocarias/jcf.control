@@ -5,7 +5,7 @@
         <!-- Título da Página -->
         <div>
           <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-400 bg-clip-text text-transparent">
-            {{ pageTitle }}
+            {{ pageTitle || 'Página' }}
           </h1>
           <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-purple-600 dark:from-cyan-400 dark:to-purple-500 mt-2 rounded-full"></div>
         </div>
@@ -38,47 +38,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup >
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
+import { usePageTitle } from '@/composables/usePageTitle'
+import { useBreadcrumbList } from '@/composables/useBreadcrumbList'
 
-const route = useRoute()
-
-const titleMap = {
-  home: 'Dashboard',
-  'cadastro/usuario/novo': 'Novo Usuário',
-  'cadastro/usuario/editar': 'Editar Usuário',
-  'cadastro/cliente/novo': 'Novo Cliente',
-  'cadastro/cliente/editar': 'Editar Cliente',
-  'cadastro/produto': 'Cadastro de Produtos',
-  entrada: 'Financeiro - Entrada',
-  saida: 'Financeiro - Saída',
-}
-
-const pageTitle = computed(() => {
-  const cleanPath = route.path.replace(/^\/|\/$/g, '') // remove / do início e fim
-  return titleMap[cleanPath] || 'Página'
-})
-
-const routeNameMap = {
-  home: 'Home',
-  cadastro: 'Cadastro',
-  cliente: 'Cliente',
-  novo: 'Novo',
-  editar: 'Editar',
-  produto: 'Produto',
-  cor: 'Cor',
-  usuario: 'Usuário',
-  entrada: 'Entrada',
-  saida: 'Saída',
-}
-
-const breadcrumbList = computed(() => {
-  const parts = route.path
-    .split('/')
-    .filter(Boolean)
-    .map(p => routeNameMap[p.toLowerCase()] || p)
-
-  return parts.length ? parts : ['Home']
-})
+const { pageTitle } = usePageTitle();
+const { breadcrumbList } = useBreadcrumbList();
 </script>

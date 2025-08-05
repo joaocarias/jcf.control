@@ -36,7 +36,7 @@
       </div>
 
       <div class="flex-1 flex flex-col">
-        <PageTitle />
+        <!-- <PageTitle /> -->
 
         <!-- Conteúdo principal -->
         <div class="max-w-7xl mx-auto px-4 py-4 text-gray-800 dark:text-gray-200">

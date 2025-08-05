@@ -31,13 +31,13 @@ const route = useRoute()
 
 const routeNameMap = {
   home: 'Home',
-  cadastro: 'Cadastro',
+  cadastros: 'Cadastros',
   cliente: 'Cliente',
   novo: 'Novo',
   editar: 'Editar',
   produto: 'Produto',
   cor: 'Cor',
-  usuario: 'Usuário',
+  usuarios: 'Usuários',
   entrada: 'Entrada',
   saida: 'Saída',
 }
