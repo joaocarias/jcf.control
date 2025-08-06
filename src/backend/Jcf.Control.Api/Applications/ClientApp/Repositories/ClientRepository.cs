@@ -3,6 +3,7 @@ using Jcf.Control.Api.Applications.ClientApp.Entities;
 using Jcf.Control.Api.Applications.ClientApp.Queries;
 using Jcf.Control.Api.Applications.ClientApp.Repositories.IRepositories;
 using Jcf.Control.Api.Applications.UserApp.Queries;
+using Jcf.Control.Api.Core.Entities;
 using Jcf.Control.Api.Data.Contexts;
 
 namespace Jcf.Control.Api.Applications.ClientApp.Repositories
@@ -68,12 +69,18 @@ namespace Jcf.Control.Api.Applications.ClientApp.Repositories
         {
             try
             {
-                var result = await _appDapperContext.Connection.QueryFirstOrDefaultAsync<Client>(
-                   ClientQuery.GET,
-                   new { Id = id },
-                   _appDapperContext.Transaction
-               );
-                return result;
+                var result = await _appDapperContext.Connection.QueryAsync<Client, Address, Client>(
+                     ClientQuery.GET,
+                     (client, address) =>
+                     {
+                         client.AddAddress(address);
+                         return client;
+                     },
+                     new { Id = id },
+                     _appDapperContext.Transaction,
+                     splitOn: "Id" // Atenção: o splitOn define a partir de qual coluna é o segundo objeto (Address)
+                );
+                return result.FirstOrDefault();
             }
             catch (Exception ex)
             {

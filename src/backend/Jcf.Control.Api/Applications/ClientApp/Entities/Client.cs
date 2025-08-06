@@ -76,5 +76,15 @@ namespace Jcf.Control.Api.Applications.ClientApp.Entities
                 UserUpdateId
             );
         }
+
+        public void AddAddress(Address address)
+        {
+            if (address is null)
+            {
+                throw new ArgumentNullException(nameof(address), "Address cannot be null.");
+            }
+            Address = address;
+            AddressId = address.Id;
+        }
     }
 }
