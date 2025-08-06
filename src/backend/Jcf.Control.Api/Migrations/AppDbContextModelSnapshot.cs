@@ -22,6 +22,54 @@ namespace Jcf.Control.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Jcf.Control.Api.Applications.ClientApp.Entities.Client", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AddressId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UserCreateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserUpdateId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("UserCreateId");
+
+                    b.HasIndex("UserUpdateId");
+
+                    b.ToTable("Clients");
+                });
+
             modelBuilder.Entity("Jcf.Control.Api.Applications.UserApp.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -80,7 +128,7 @@ namespace Jcf.Control.Api.Migrations
                         new
                         {
                             Id = new Guid("08dbd59a-2683-4c67-8e16-689ba2648545"),
-                            CreateAt = new DateTime(2025, 6, 8, 19, 29, 42, 893, DateTimeKind.Utc).AddTicks(5798),
+                            CreateAt = new DateTime(2025, 8, 6, 2, 32, 30, 65, DateTimeKind.Utc).AddTicks(3288),
                             Email = "admin@email.com",
                             IsActive = true,
                             Login = "admin@email.com",
@@ -91,7 +139,7 @@ namespace Jcf.Control.Api.Migrations
                         new
                         {
                             Id = new Guid("08dbdc08-56e1-4e90-805f-db29361e075e"),
-                            CreateAt = new DateTime(2025, 6, 8, 19, 29, 42, 893, DateTimeKind.Utc).AddTicks(6614),
+                            CreateAt = new DateTime(2025, 8, 6, 2, 32, 30, 65, DateTimeKind.Utc).AddTicks(4215),
                             Email = "basico@email.com",
                             IsActive = true,
                             Login = "basico@email.com",
@@ -101,7 +149,101 @@ namespace Jcf.Control.Api.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Jcf.Control.Api.Core.Entities.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Complement")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Neighborhood")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Number")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("Place")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(2)
+                        .HasColumnType("character varying(2)");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UserCreateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserUpdateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserCreateId");
+
+                    b.HasIndex("UserUpdateId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Jcf.Control.Api.Applications.ClientApp.Entities.Client", b =>
+                {
+                    b.HasOne("Jcf.Control.Api.Core.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("Jcf.Control.Api.Applications.UserApp.Entities.User", "UserCreate")
+                        .WithMany()
+                        .HasForeignKey("UserCreateId");
+
+                    b.HasOne("Jcf.Control.Api.Applications.UserApp.Entities.User", "UserUpdate")
+                        .WithMany()
+                        .HasForeignKey("UserUpdateId");
+
+                    b.Navigation("Address");
+
+                    b.Navigation("UserCreate");
+
+                    b.Navigation("UserUpdate");
+                });
+
             modelBuilder.Entity("Jcf.Control.Api.Applications.UserApp.Entities.User", b =>
+                {
+                    b.HasOne("Jcf.Control.Api.Applications.UserApp.Entities.User", "UserCreate")
+                        .WithMany()
+                        .HasForeignKey("UserCreateId");
+
+                    b.HasOne("Jcf.Control.Api.Applications.UserApp.Entities.User", "UserUpdate")
+                        .WithMany()
+                        .HasForeignKey("UserUpdateId");
+
+                    b.Navigation("UserCreate");
+
+                    b.Navigation("UserUpdate");
+                });
+
+            modelBuilder.Entity("Jcf.Control.Api.Core.Entities.Address", b =>
                 {
                     b.HasOne("Jcf.Control.Api.Applications.UserApp.Entities.User", "UserCreate")
                         .WithMany()

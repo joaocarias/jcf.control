@@ -1,26 +1,27 @@
-﻿using Jcf.Control.Api.Applications.UserApp.Entities;
-using Jcf.Control.Api.Applications.UserApp.Models.Records;
-using Jcf.Control.Api.Applications.UserApp.Services.IServices;
+﻿using Jcf.Control.Api.Applications.ClientApp.Entities;
+using Jcf.Control.Api.Applications.ClientApp.Models.Records;
+using Jcf.Control.Api.Applications.ClientApp.Services.IServices;
 using Jcf.Control.Api.Core.Constants;
 using Jcf.Control.Api.Core.Controllers;
+using Jcf.Control.Api.Core.Entities;
 using Jcf.Control.Api.Core.Models.Responses;
-using Jcf.Control.Api.Core.Uteis;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
-namespace Jcf.Control.Api.Applications.UserApp.Controllers
+namespace Jcf.Control.Api.Applications.ClientApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : AppControllerBase
+    public class ClientController : AppControllerBase
     {
-        private readonly ILogger<UserController> _logger;
-        private readonly IUserService _userService;
+        private readonly ILogger<ClientController> _logger;
+        private readonly IClientService _clientService;
 
-        public UserController(ILogger<UserController> logger, IUserService userService)
+        public ClientController(ILogger<ClientController> logger, IClientService clientService)
         {
             _logger = logger;
-            _userService = userService;
+            _clientService = clientService;
         }
 
         /// <summary>
@@ -34,19 +35,19 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
             var response = new ApiResponse();
             try
             {
-                var user = await _userService.GetAsync(id);
-                if (user is null)
+                var myObj = await _clientService.GetAsync(id);
+                if (myObj is null)
                 {
                     response.IsNotFound();
                     return NotFound(response);
                 }
 
-                response.IsOk(user.ToDTO());
+                response.IsOk(myObj.ToDTO());
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"[{nameof(UserController)} - {nameof(Get)}] | {ex.Message}");
+                _logger.LogError($"[{nameof(ClientController)} - {nameof(Get)}] | {ex.Message}", ex);
                 response.IsBadRequest(ex.Message);
                 return BadRequest(response);
             }
@@ -58,7 +59,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
             var response = new ApiResponse();
             try
             {
-                var users = await _userService.GetAllAsync();
+                var users = await _clientService.GetAllAsync();
                 if (users is null)
                 {
                     response.IsNotFound();
@@ -70,62 +71,61 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"[{nameof(UserController)} - {nameof(Get)}] | {ex.Message}");
+                _logger.LogError($"[{nameof(ClientController)} - {nameof(Get)}] | {ex.Message}", ex);
                 response.IsBadRequest(ex.Message);
                 return BadRequest(response);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] PostUser newUser)
+        public async Task<IActionResult> Post([FromBody] PostClient newObj)
         {
             var response = new ApiResponse();
             try
             {
-                var user = await _userService.CreateAsync(new User(newUser.Name, newUser.Email, PasswordUtil.CreateHashMD5(newUser.Password), newUser.Login, RolesConstants.BASIC, GetUserIdFromToken()));
-                if (user is null)
+                var userCreateId = GetUserIdFromToken();
+                var obj = await _clientService.CreateAsync(new Client(newObj.Name, newObj.Email, newObj.Phone, new Address(newObj.Address.Place, newObj.Address.Number, newObj.Address.Neighborhood, newObj.Address.Complement, newObj.Address.ZipCode, newObj.Address.City, newObj.Address.State, userCreateId), userCreateId));
+                if (obj is null)
                 {
                     response.IsBadRequest(ApiResponseConstants.NOT_CREATE);
                     return BadRequest(response);
                 }
 
-                return CreatedAtAction(nameof(Get), new { id = user.Id }, new LoginResponseDTO() { User = user.ToDTO(), Token = string.Empty });
-
+                return CreatedAtAction(nameof(Get), new { id = obj.Id }, new ApiResponse { Result = obj.ToDTO(), StatusCode = HttpStatusCode.Created});
             }
             catch (Exception ex)
             {
-                _logger.LogError($"[{nameof(UserController)} - {nameof(Get)}] | {ex.Message}");
+                _logger.LogError($"[{nameof(ClientController)} - {nameof(Get)}] | {ex.Message}", ex);
                 response.IsBadRequest(ex.Message);
                 return BadRequest(response);
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([Required] Guid id, [FromBody] PutUser editUser)
+        public async Task<IActionResult> Put([Required] Guid id, [FromBody] PutClient editObj)
         {
             var response = new ApiResponse();
             try
             {
-                if(id != editUser.Id)
+                if (id != editObj.Id)
                 {
                     response.IsBadRequest(ApiResponseConstants.UPDATE_IDS_DISTINCTS);
                     return BadRequest(response);
                 }
 
-                var user = await _userService.GetAsync(id);
-                if (user is null)
+                var obj = await _clientService.GetAsync(id);
+                if (obj is null)
                 {
                     response.IsBadRequest(ApiResponseConstants.NOT_FOUND);
                     return BadRequest(response);
                 }
 
-                user = _userService.Update(user, editUser, GetUserIdFromToken());
-                return CreatedAtAction(nameof(Get), new { id = user?.Id }, new LoginResponseDTO() { User = user?.ToDTO(), Token = string.Empty });
-
+                obj = _clientService.Update(obj, editObj, GetUserIdFromToken());
+                return CreatedAtAction(nameof(Get), new { id = obj?.Id }, new ApiResponse { Result = obj?.ToDTO() });
             }
             catch (Exception ex)
             {
-                _logger.LogError($"[{nameof(UserController)} - {nameof(Get)}] | {ex.Message}");
+                _logger.LogError($"[{nameof(ClientController)} - {nameof(Get)}] | {ex.Message}");
                 response.IsBadRequest(ex.Message);
                 return BadRequest(response);
             }
@@ -137,27 +137,26 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
             var response = new ApiResponse();
             try
             {
-                var user = await _userService.GetAsync(id);
+                var user = await _clientService.GetAsync(id);
                 if (user is null)
                 {
                     response.IsBadRequest(ApiResponseConstants.NOT_FOUND);
                     return BadRequest(response);
                 }
 
-                var _hasDelete = _userService.Delete(user, GetUserIdFromToken());
-                if( !_hasDelete)
+                var _hasDelete = _clientService.Delete(user, GetUserIdFromToken());
+                if (!_hasDelete)
                 {
                     response.IsBadRequest(ApiResponseConstants.ERROR_DELETE);
                     return BadRequest(response);
                 }
 
                 response.IsOk(null);
-                return Ok(response); 
-
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"[{nameof(UserController)} - {nameof(Get)}] | {ex.Message}");
+                _logger.LogError($"[{nameof(ClientController)} - {nameof(Get)}] | {ex.Message}");
                 response.IsBadRequest(ex.Message);
                 return BadRequest(response);
             }

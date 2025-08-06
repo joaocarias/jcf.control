@@ -48,7 +48,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(UserService)} | {nameof(CreateAsync)} | Error: {ex.Message}");
+                _logger.LogError($"{nameof(UserRepository)} | {nameof(CreateAsync)} | Error: {ex.Message}");
                 return null;
             }
         }
@@ -62,7 +62,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(UserService)} | {nameof(Delete)} | Error: {ex.Message}");
+                _logger.LogError($"{nameof(UserRepository)} | {nameof(Delete)} | Error: {ex.Message}");
                 return false;
             }
         }
@@ -76,7 +76,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(UserService)} | {nameof(GetAllAsync)} | Error: {ex.Message}");
+                _logger.LogError($"{nameof(UserRepository)} | {nameof(GetAllAsync)} | Error: {ex.Message}");
                 return Enumerable.Empty<User>();
             }
         }
@@ -94,7 +94,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(UserService)} | {nameof(GetByIdAsync)} | Error: {ex.Message}");
+                _logger.LogError($"{nameof(UserRepository)} | {nameof(GetByIdAsync)} | Error: {ex.Message}");
                 return null;
             }
         }
