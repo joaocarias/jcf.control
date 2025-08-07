@@ -50,7 +50,6 @@
 <script setup>
 import { ref } from 'vue'
 import Navbar from '@/components/layout/Navbar.vue'
-import PageTitle from '@/components/layout/PageTitle.vue'
 import Sidebar from '@/components/layout/Sidebar.vue'
 
 const sidebarOpen = ref(false)

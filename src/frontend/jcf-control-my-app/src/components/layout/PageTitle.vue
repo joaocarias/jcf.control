@@ -27,7 +27,7 @@
                     'text-gray-600 dark:text-gray-400': index !== breadcrumbList.length - 1
                   }"
                 >
-                  {{ item }}
+                {{ item }} 
                 </span>
               </li>
             </ol>

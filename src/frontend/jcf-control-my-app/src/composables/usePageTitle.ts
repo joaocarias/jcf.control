@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 
 const titleMap: Record<string, string> = {
   home: 'Dashboard',
-  'cadastros/usuarios': 'Usuários',
+  'registers/users': 'Usuários',
   'cadastros/usuarios/novo': 'Novo Usuário',
   'cadastro/usuario/editar': 'Editar Usuário',
 

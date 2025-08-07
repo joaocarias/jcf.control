@@ -138,14 +138,16 @@ import { ref, onMounted } from 'vue'
 import { UserServices } from '@/services/userServices'
 import BaseLoading from '@/components/base/BaseLoading.vue'
 import PageTitle from '@/components/base/PageTitle.vue'
-import { usePageTitle } from '@/composables/usePageTitle'
+import { useI18n } from 'vue-i18n';
+
 import { useBreadcrumbList } from '@/composables/useBreadcrumbList'
+import { RouteMeta } from '@/router/route-meta.js'
 
 const users = ref([])
 const loading = ref(false)
 const error = ref('')
 
-const { pageTitle } = usePageTitle();
+const pageTitle = RouteMeta.USERS.name;
 const { breadcrumbList, breadcrumbString } = useBreadcrumbList();
 
 // Carregar usuários
@@ -209,4 +211,6 @@ const deleteUser = async (user) => {
 onMounted(() => {
   loadUsers()
 })
+
+console.log('tile: ', pageTitle)
 </script> 
