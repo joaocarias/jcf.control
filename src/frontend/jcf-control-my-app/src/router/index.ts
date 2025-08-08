@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { routes } from './routes';
 import { APP_TITLE } from '@/constants/app';
 import { isAuthenticated } from '@/utils/auth';
-import { RouteName } from '@/router/route-names';
 
 const router = createRouter({
   history: createWebHistory(),

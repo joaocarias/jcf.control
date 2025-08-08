@@ -26,7 +26,7 @@
       <nav class="flex-1 p-4 space-y-2">
         <!-- Dashboard -->
         <router-link 
-         :to="{ name: RouteName.HOME }"
+          to="/home"
           class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-purple-50/80 dark:hover:bg-gray-800/80 transition-all duration-200 group"
           active-class="bg-gradient-to-r from-purple-100/80 to-cyan-100/80 dark:from-purple-900/80 dark:to-cyan-900/80 text-cyan-600 dark:text-cyan-400 border-l-4 border-cyan-500 dark:border-cyan-400"
         >
@@ -42,7 +42,7 @@
           >
             <div class="flex items-center gap-3">
               <i class="fas fa-database text-lg group-hover:scale-110 transition-transform"></i>
-              <span>{{ $t('registers') }} </span>
+              <span>{{ $t('Registers') }} </span>
             </div>
             <i 
               :class="[
@@ -89,26 +89,17 @@
 
             <!-- Usuários -->
             <router-link 
-              :to="{ name: RouteName.USERS }"
+              :to="{ path: pathPageUser }"
               class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-purple-50/60 dark:hover:bg-gray-800/60 transition-all duration-200 group text-sm"
               active-class="bg-gradient-to-r from-purple-100/60 to-cyan-100/60 dark:from-purple-900/60 dark:to-cyan-900/60 text-cyan-600 dark:text-cyan-400 border-l-2 border-cyan-400 dark:border-cyan-300"
             >
-              <i class="fas fa-user-plus text-sm group-hover:scale-110 transition-transform"></i>
-              <span>{{ $t('users') }}</span>
+             <i :class="[iconPageUser, 'fas', 'fa-user-plus', 'text-sm', 'group-hover:scale-110', 'transition-transform']"></i>
+              <span>{{ titlePageUser }}</span>
             </router-link>
           </div>
         </div>
 
-        <!-- Usuários -->
-        <router-link 
-          to="/users"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-purple-50/80 dark:hover:bg-gray-800/80 transition-all duration-200 group"
-          active-class="bg-gradient-to-r from-purple-100/80 to-cyan-100/80 dark:from-purple-900/80 dark:to-cyan-900/80 text-cyan-600 dark:text-cyan-400 border-l-4 border-cyan-500 dark:border-cyan-400"
-        >
-          <i class="fas fa-users text-lg group-hover:scale-110 transition-transform"></i>
-          <span>Usuários</span>
-        </router-link>
-
+       
         <!-- Configurações -->
         <router-link 
           to="/settings"
@@ -157,10 +148,17 @@
 <script setup>
 import { ref } from 'vue'
 import { APP_TITLE } from '@/constants/app.js'
-import { RouteName } from '@/router/route-names.js'
+import { RouteMeta } from '@/router/route-meta.js'
+import { useRouteMetaLocale} from '@/composables/useRouteMetaLocale'
 
 const title = APP_TITLE
 const isCadastroOpen = ref(false)
+const { getTitle } = useRouteMetaLocale();
+
+// User
+const titlePageUser = getTitle(RouteMeta.USERS.name.toUpperCase())
+const iconPageUser = RouteMeta.USERS.icon;
+const pathPageUser = RouteMeta.USERS.path;
 
 const toggleCadastro = () => {
   isCadastroOpen.value = !isCadastroOpen.value

@@ -1,27 +1,9 @@
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { RouteMeta } from '@/router/route-meta';
 
-const titleMap: Record<string, string> = {
-  home: 'Dashboard',
-  'registers/users': 'Usuários',
-  'cadastros/usuarios/novo': 'Novo Usuário',
-  'cadastro/usuario/editar': 'Editar Usuário',
-
-  'cadastro/cliente/novo': 'Novo Cliente',
-  'cadastro/cliente/editar': 'Editar Cliente',
-  'cadastro/produto': 'Cadastro de Produtos',
-
-  entrada: 'Financeiro - Entrada',
-  saida: 'Financeiro - Saída',
-}
-
-export function usePageTitle() {
-  const route = useRoute()
-
-  const pageTitle = computed(() => {
-    const cleanPath = route.path.replace(/^\/|\/$/g, '')
-    return titleMap[cleanPath] || 'Página'
-  })
-
-  return { pageTitle }
+export function usePageTitleFor(name) {
+  const { t } = useI18n();
+  const title = computed(() => t(RouteMeta[name].name));
+  return { title };
 }

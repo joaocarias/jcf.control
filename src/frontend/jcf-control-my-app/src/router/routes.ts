@@ -1,10 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router';
+
+import { APP_TITLE } from '@/constants/app';
+import { RouteMeta } from '@/router/route-meta';
+
+import AdminLayout from '@/layouts/AdminLayout.vue';
+
 import Login from '@/pages/auth/Login.vue';
 import Home from '@/pages/dashboard/Home.vue';
 import UsersList from '@/pages/registers/users/UserList.vue';
-import AdminLayout from '@/layouts/AdminLayout.vue';
-import { APP_TITLE } from '@/constants/app';
-import { RouteMeta } from '@/router/route-meta';
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -16,7 +19,7 @@ export const routes: RouteRecordRaw[] = [
     name: RouteMeta.LOGIN.name,
     component: Login,
     meta: {
-      title: `${RouteMeta.LOGIN.title} | ${APP_TITLE}`
+      title: `Login | ${APP_TITLE}`
     }
   },
   {
@@ -29,7 +32,7 @@ export const routes: RouteRecordRaw[] = [
         name: RouteMeta.HOME.name,
         component: Home,
         meta: {
-          title: `${RouteMeta.HOME.title} | ${APP_TITLE}`
+          title: `Home | ${APP_TITLE}`
         }
       }
     ]
@@ -44,7 +47,7 @@ export const routes: RouteRecordRaw[] = [
         name: RouteMeta.USERS.name,
         component: UsersList,
         meta: {
-          title: `${RouteMeta.USERS.title} | ${APP_TITLE}`
+          title: `Usuários | ${APP_TITLE}`
         }
       }
     ]

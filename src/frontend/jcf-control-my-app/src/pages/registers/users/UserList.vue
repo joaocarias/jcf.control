@@ -2,7 +2,7 @@
   <div class="space-y-6">
     <!-- Header da página -->
     <div class="flex items-center justify-between">
-      <PageTitle :title="pageTitle" :subtitle="breadcrumbString" />
+      <PageTitle :title="pageTitle" :subtitle="breadcrumb" />
       
       <!-- Botão Adicionar Usuário -->
       <button 
@@ -10,7 +10,7 @@
         class="bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
       >
         <i class="fas fa-plus"></i>
-        Adicionar Usuário
+        {{ $t('user.add') }}
       </button>
     </div>
 
@@ -135,20 +135,23 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+
 import { UserServices } from '@/services/userServices'
 import BaseLoading from '@/components/base/BaseLoading.vue'
 import PageTitle from '@/components/base/PageTitle.vue'
-import { useI18n } from 'vue-i18n';
+import { formatDate } from '@/utils/dateFormatter';
 
-import { useBreadcrumbList } from '@/composables/useBreadcrumbList'
+import { useRouteMetaLocale} from '@/composables/useRouteMetaLocale'
+
 import { RouteMeta } from '@/router/route-meta.js'
 
 const users = ref([])
 const loading = ref(false)
 const error = ref('')
+const { getTitle, getBreadcrumb } = useRouteMetaLocale();
 
-const pageTitle = RouteMeta.USERS.name;
-const { breadcrumbList, breadcrumbString } = useBreadcrumbList();
+const pageTitle = getTitle(RouteMeta.USERS.name.toUpperCase())
+const breadcrumb = getBreadcrumb(RouteMeta.USERS.name.toUpperCase())
 
 // Carregar usuários
 const loadUsers = async () => {
@@ -162,22 +165,6 @@ const loadUsers = async () => {
     console.error('Erro ao carregar usuários:', err)
   } finally {
     loading.value = false
-  }
-}
-
-// Formatar data
-const formatDate = (dateString) => {
-  try {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  } catch {
-    return dateString
   }
 }
 
@@ -212,5 +199,4 @@ onMounted(() => {
   loadUsers()
 })
 
-console.log('tile: ', pageTitle)
 </script> 

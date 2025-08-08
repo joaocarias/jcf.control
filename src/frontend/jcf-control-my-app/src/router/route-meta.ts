@@ -3,7 +3,8 @@ export const RouteMeta = {
         name : 'Home',
         title: "Home",
         requiresAuth: true,
-        path: '/login',
+        path: '/home',
+        breadcrumbkeys: ['Home'],
         icon: 'fas fa-sign-in-alt',
     },
     LOGIN: {
@@ -11,13 +12,15 @@ export const RouteMeta = {
         title: "Login",
         requiresAuth: false,
         path: '/login',
+        breadcrumbkeys: ['Login'],
         icon: 'fas fa-sign-in-alt',
     },   
     USERS: {
         name : 'Users',
-        title: t('users'),
+        title: "Users",        
         requiresAuth: true,
         path: '/registers/users',
-        icon: 'fas fa-users',
+        breadcrumbkeys: ['Registers', 'Users'],
+        icon: 'fas fa-user-plus',
     },
 }

@@ -5,7 +5,7 @@
         <!-- Título da Página -->
         <div>
           <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-400 bg-clip-text text-transparent">
-            {{ pageTitle || 'Página' }}
+            $t({{ pageTitle || 'Página' }})
           </h1>
           <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-purple-600 dark:from-cyan-400 dark:to-purple-500 mt-2 rounded-full"></div>
         </div>
