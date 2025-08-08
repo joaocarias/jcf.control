@@ -25,7 +25,7 @@
         
         <span class="text-gray-600 dark:text-gray-300">Olá, <span class="text-cyan-600 dark:text-cyan-400 font-semibold">{{ username }}</span></span>
                       
-        <button @click="logout" class="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm transition-colors bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 px-3 py-1 rounded-lg border border-red-200 dark:border-red-800">
+        <button @click="logout" class="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm transition-colors bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 px-3 py-1 rounded-lg border border-red-200 dark:border-red-800 cursor-pointer">
           <i class="fas fa-sign-out-alt mr-1"></i> Sair
         </button>
       </div>
@@ -35,11 +35,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
-import { logoutStorage } from '@/utils/auth'
+import { logoutStorage, getAuthToken } from '@/utils/auth'
 
 const { isDark, toggleTheme } = useThemeStore()
 const username = ref('Usuário')
+const router = useRouter()
 
 // Função para obter o primeiro nome do usuário do sessionStorage
 const getUserFirstName = () => {
@@ -56,9 +58,12 @@ const getUserFirstName = () => {
 }
 
 const logout = () => {
+  if (!getAuthToken()) {
+      router.push('/login')
+  }
+
   logoutStorage()
-  // Aqui você pode adicionar redirecionamento para login se necessário
-  alert('Logout executado')
+  router.push('/login')
 }
 
 onMounted(() => {

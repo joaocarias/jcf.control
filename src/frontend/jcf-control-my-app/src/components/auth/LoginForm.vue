@@ -4,6 +4,7 @@ import { login } from '@/services/authService'
 import { useRouter } from 'vue-router'
 import { loginStorage } from '@/utils/auth'
 
+const isLoading = ref(false)
 const email = ref('')
 const password = ref('')
 const errorMessage = ref('')
@@ -12,6 +13,7 @@ const router = useRouter()
 const handleLogin = async () => {
   errorMessage.value = '' // limpa erro anterior
   try {
+    isLoading.value = true
     const response = await login(email.value, password.value);
    
     if (response.data?.isSuccess) {
@@ -31,6 +33,8 @@ const handleLogin = async () => {
       console.error('Erro inesperado ao tentar logar:', error)
     }
   }
+
+  isLoading.value = false;
 }
 </script>
 
@@ -76,12 +80,14 @@ const handleLogin = async () => {
 
     <button
       type="submit"
+      :disabled="isLoading"
       class="w-full bg-gradient-to-r from-cyan-500 to-purple-600
              hover:from-cyan-600 hover:to-purple-700 text-white font-bold
              py-2 rounded transition duration-300 shadow-lg
-             shadow-purple-700/40"
+             shadow-purple-700/40 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
     >
-      ENTRAR
+      <span v-if="!isLoading">ENTRAR</span>
+      <span v-else>Aguarde...</span>
     </button>
     
   </form>
