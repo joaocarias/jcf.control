@@ -55,9 +55,10 @@
                                 <div class="relative">
                                     <input v-model="keepLoggedIn" type="checkbox" id="keepLoggedIn" class="sr-only" />
                                     <div :class="keepLoggedIn
-                                            ? 'border-brand-500 bg-brand-500'
-                                            : 'bg-transparent border-gray-300 dark:border-gray-700'
-                                        " class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
+                                        ? 'border-brand-500 bg-brand-500'
+                                        : 'bg-transparent border-gray-300 dark:border-gray-700'
+                                        "
+                                        class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
                                         <span :class="keepLoggedIn ? '' : 'opacity-0'">
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +74,7 @@
                         </div>
                         <router-link to="/reset-password"
                             class="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400">{{
-                            $t('forgotPassword') }}</router-link>
+                                $t('forgotPassword') }}</router-link>
                     </div>
                     <!-- Button -->
                     <div>
@@ -99,16 +100,16 @@ const showPassword = ref(false)
 const keepLoggedIn = ref(false)
 
 const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value
+    showPassword.value = !showPassword.value
 }
 
 const handleSubmit = () => {
-  // Handle form submission
-  console.log('Form submitted', {
-    email: email.value,
-    password: password.value,
-    keepLoggedIn: keepLoggedIn.value,
-  })
+    // Handle form submission
+    console.log('Form submitted', {
+        email: email.value,
+        password: password.value,
+        keepLoggedIn: keepLoggedIn.value,
+    })
 }
 
 </script>

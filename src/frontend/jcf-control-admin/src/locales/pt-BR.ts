@@ -16,6 +16,7 @@ const messages = {
   keepMeLoggedIn: 'Manter-me conectado',
   msgEnterYourPassword: "Insira sua senha!",
   msgLogin: "Informe seu e-mail e senha para entrar!",
+  msgWelcomeViewLogin: "Sua plataforma de gestão eficiente",
   SignIn: 'Login',
 
 };
