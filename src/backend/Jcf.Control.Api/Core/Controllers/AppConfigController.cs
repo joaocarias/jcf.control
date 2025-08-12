@@ -16,7 +16,7 @@ namespace Jcf.Control.Api.Core.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("GetRoles")]
         public IActionResult GetRoles()
         {
             var response = new ApiResponse();

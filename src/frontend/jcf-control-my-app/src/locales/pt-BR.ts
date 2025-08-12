@@ -1,4 +1,8 @@
 const messages = {
+  "Add User": 'Adicionar Usuário',
+  add: 'adicionar',
+  Add: 'Adicionar',
+  edit: 'Editar',
   hello: 'Olá',
   welcome: 'Bem-vindo ao nosso sistema',
   logout: 'Sair',

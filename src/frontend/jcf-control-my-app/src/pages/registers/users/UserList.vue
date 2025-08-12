@@ -7,7 +7,7 @@
       <!-- Botão Adicionar Usuário -->
       <button 
         @click="addUser"
-        class="bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+        class="bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2 cursor-pointer"
       >
         <i class="fas fa-plus"></i>
         {{ $t('user.add') }}
@@ -135,6 +135,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { UserServices } from '@/services/userServices'
 import BaseLoading from '@/components/base/BaseLoading.vue'
@@ -149,6 +150,7 @@ const users = ref([])
 const loading = ref(false)
 const error = ref('')
 const { getTitle, getBreadcrumb } = useRouteMetaLocale();
+const router = useRouter()
 
 const pageTitle = getTitle(RouteMeta.USERS.name.toUpperCase())
 const breadcrumb = getBreadcrumb(RouteMeta.USERS.name.toUpperCase())
@@ -171,7 +173,7 @@ const loadUsers = async () => {
 // Adicionar usuário
 const addUser = () => {
   // TODO: Implementar navegação para página de adicionar usuário
-  console.log('Adicionar usuário')
+  router.push({ name: 'User_Add' })
 }
 
 // Editar usuário

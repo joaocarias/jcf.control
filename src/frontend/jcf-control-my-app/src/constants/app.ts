@@ -1,1 +1,1 @@
-export const APP_TITLE = 'JCF Control App'
+export const APP_TITLE = 'JCF Control Admin'

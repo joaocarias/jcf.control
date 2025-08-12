@@ -23,4 +23,12 @@ export const RouteMeta = {
         breadcrumbkeys: ['Registers', 'Users'],
         icon: 'fas fa-user-plus',
     },
+    USER_ADD: {
+        name : 'User_Add',
+        title: "Add User",        
+        requiresAuth: true,
+        path: '/registers/users/add',
+        breadcrumbkeys: ['Registers', 'Users', 'Add'],
+        icon: 'fas fa-user-plus',
+    },
 }

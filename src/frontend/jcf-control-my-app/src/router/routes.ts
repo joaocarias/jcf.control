@@ -7,7 +7,9 @@ import AdminLayout from '@/layouts/AdminLayout.vue';
 
 import Login from '@/pages/auth/Login.vue';
 import Home from '@/pages/dashboard/Home.vue';
+
 import UsersList from '@/pages/registers/users/UserList.vue';
+import UserAdd from '@/pages/registers/users/UserAdd.vue';
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -48,6 +50,21 @@ export const routes: RouteRecordRaw[] = [
         component: UsersList,
         meta: {
           title: `Usuários | ${APP_TITLE}`
+        }
+      }
+    ]
+  },
+  {
+    path: RouteMeta.USER_ADD.path,
+    component: AdminLayout, 
+    meta: { requiresAuth: RouteMeta.USER_ADD.requiresAuth },
+    children: [
+      {
+        path: '',
+        name: RouteMeta.USER_ADD.name,  
+        component: UserAdd,
+        meta: {
+          title: `Adicionar Usuário | ${APP_TITLE}`
         }
       }
     ]
