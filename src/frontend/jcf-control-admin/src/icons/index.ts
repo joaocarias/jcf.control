@@ -45,6 +45,7 @@ import LayoutDashboardIcon from "./LayoutDashboardIcon.vue";
 import UserGroupIcon from "./UserGroupIcon.vue";
 import BellIcon from "./BellIcon.vue";
 import BarChartIcon from "./BarChartIcon.vue";
+import DataBaseIcon from "./DataBaseIcon.vue";
 
 export {
   BellIcon,
@@ -94,4 +95,5 @@ export {
   MailBox,
   SendIcon,
   DraftIcon,
+  DataBaseIcon
 };

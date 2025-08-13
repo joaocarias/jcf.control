@@ -7,19 +7,25 @@
         <thead>
           <tr class="border-b border-gray-200 dark:border-gray-700">
             <th class="px-5 py-3 text-left w-3/11 sm:px-6">
-              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">User</p>
+              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Name</p>
             </th>
             <th class="px-5 py-3 text-left w-2/11 sm:px-6">
-              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Project Name</p>
+              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Email</p>
             </th>
             <th class="px-5 py-3 text-left w-2/11 sm:px-6">
-              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Team</p>
+              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Login</p>
+            </th>
+            <th class="px-5 py-3 text-left w-2/11 sm:px-6">
+              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Role</p>
             </th>
             <th class="px-5 py-3 text-left w-2/11 sm:px-6">
               <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Status</p>
             </th>
             <th class="px-5 py-3 text-left w-2/11 sm:px-6">
-              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Budget</p>
+              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">CreateAt</p>
+            </th>
+            <th class="px-5 py-3 text-left w-2/11 sm:px-6">
+              <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400"><span></span></p>
             </th>
           </tr>
         </thead>

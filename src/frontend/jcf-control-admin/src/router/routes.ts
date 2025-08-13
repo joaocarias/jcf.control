@@ -24,5 +24,19 @@ export const routes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+    {
+    path: '/registers/users',
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Users',
+        component: () => import('@/views/Admin/Registers/Users/UserList.vue'),
+        meta: {
+          title: `Usuários | ${APP_TITLE}`
+        }
+      }
+    ]
   }
 ];
