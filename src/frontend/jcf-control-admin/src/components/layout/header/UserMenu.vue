@@ -8,7 +8,7 @@
         <img src="/images/user/owner.jpg" alt="User" />
       </span>
 
-      <span class="block mr-1 font-medium text-theme-sm">Musharof </span>
+      <span class="block mr-1 font-medium text-theme-sm">{{ user?.firstName }} </span>
 
       <ChevronDownIcon :class="{ 'rotate-180': dropdownOpen }" />
     </button>
@@ -20,10 +20,10 @@
     >
       <div>
         <span class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-          Musharof Chowdhury
+          {{  user?.name }}
         </span>
         <span class="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-          randomuser@pimjo.com
+          {{  user?.email }}
         </span>
       </div>
 
@@ -50,20 +50,23 @@
         <LogoutIcon
           class="text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"
         />
-        Sign out
+        {{ $t('SignOut') }}
       </router-link>
     </div>
     <!-- Dropdown End -->
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { UserCircleIcon, ChevronDownIcon, LogoutIcon, SettingsIcon, InfoCircleIcon } from '@/icons'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
+import { getAuthUser, getAuthToken, logoutStorage } from '@/utils/auth'
 
 const dropdownOpen = ref(false)
-const dropdownRef = ref(null)
+const dropdownRef = ref<HTMLElement | null>(null)
+const router = useRouter()
+const user = getAuthUser()
 
 const menuItems = [
   { href: '/profile', icon: UserCircleIcon, text: 'Edit profile' },
@@ -80,13 +83,16 @@ const closeDropdown = () => {
 }
 
 const signOut = () => {
-  // Implement sign out logic here
-  console.log('Signing out...')
-  closeDropdown()
+    if (!getAuthToken()) {
+      router.push('/login')
+  }
+
+  logoutStorage()
+  router.push('/login')
 }
 
-const handleClickOutside = (event) => {
-  if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+const handleClickOutside = (event: MouseEvent) => {
+  if (dropdownRef.value && !dropdownRef.value.contains(event.target as Node)) {
     closeDropdown()
   }
 }

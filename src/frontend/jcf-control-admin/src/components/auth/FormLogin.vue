@@ -93,23 +93,52 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { login } from '@/services/authService'
+import { useRouter } from 'vue-router'
+import { loginStorage } from '@/utils/auth'
+import { AxiosError } from 'axios';
+
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
+
 const showPassword = ref(false)
 const keepLoggedIn = ref(false)
+
+const isLoading = ref(false)
+const errorMessage = ref('')
 
 const togglePasswordVisibility = () => {
     showPassword.value = !showPassword.value
 }
 
-const handleSubmit = () => {
-    // Handle form submission
-    console.log('Form submitted', {
-        email: email.value,
-        password: password.value,
-        keepLoggedIn: keepLoggedIn.value,
-    })
+const handleSubmit = async () => {
+  errorMessage.value = '' // limpa erro anterior
+  try {
+    isLoading.value = true
+    const response = await login(email.value, password.value);
+   
+    if (response.data?.isSuccess) {
+      const { token, user } = response.data.result
+      loginStorage(token, user) // armazena token e usuário
+      router.push('/home')
+    } else {
+      errorMessage.value = 'Erro desconhecido ao logar.'
+    }
+  } catch (err) {
+    const error = err as AxiosError<{ statusCode: number; errorMessages?: string[] }>;
+    if (error.response && error.response.data) {
+      const { statusCode, errorMessages } = error.response.data;
+      console.log(`statusCode: ${statusCode} | errorMessage: ${errorMessages?.[0] || 'Erro desconhecido'}`)
+       errorMessage.value = errorMessages?.[0] || 'Erro ao fazer login.'
+    } else {
+      errorMessage.value = 'Erro ao conectar com o servidor.'
+      console.error('Erro inesperado ao tentar logar:', error)
+    }
+  }
+
+  isLoading.value = false;
 }
 
 </script>

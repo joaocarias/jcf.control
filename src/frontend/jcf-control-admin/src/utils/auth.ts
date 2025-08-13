@@ -23,3 +23,8 @@ export function logoutStorage(): void {
     sessionStorage.removeItem(jcf_control_app_auth_token); 
     sessionStorage.removeItem(jcf_control_app_auth_user); 
 } 
+
+export function getAuthUser(): User | null {
+    const user = sessionStorage.getItem(jcf_control_app_auth_user);
+    return user ? JSON.parse(user) : null;
+}

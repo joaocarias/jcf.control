@@ -157,8 +157,13 @@ router.afterEach((to) => {
 
 router.beforeEach((to, from, next) => {
   const loggedIn = isAuthenticated();
-
-  if (to.meta.requiresAuth && !loggedIn) {
+  if (to.path === '/') {
+    if (isAuthenticated()) {
+      next('/home')
+    } else {
+      next('/login')
+    }
+  } else if (to.meta.requiresAuth && !loggedIn) {
     next({ name: 'Login' });
   } else {
     next();
