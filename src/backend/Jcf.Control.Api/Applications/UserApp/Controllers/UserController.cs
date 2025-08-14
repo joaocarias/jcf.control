@@ -82,7 +82,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
             var response = new ApiResponse();
             try
             {
-                var user = await _userService.CreateAsync(new User(newUser.Name, newUser.Email, PasswordUtil.CreateHashMD5(newUser.Password), newUser.Login, RolesConstants.BASIC, GetUserIdFromToken()));
+                var user = await _userService.CreateAsync(new User(newUser.Name, newUser.Email, string.IsNullOrEmpty(newUser.Password) ? PasswordUtil.CreateHashMD5(PasswordUtil.PasswordDefault) : PasswordUtil.CreateHashMD5(newUser.Password), string.IsNullOrEmpty(newUser.Login) ? newUser.Email : newUser.Login, RolesConstants.BASIC, GetUserIdFromToken()));
                 if (user is null)
                 {
                     response.IsBadRequest(ApiResponseConstants.NOT_CREATE);

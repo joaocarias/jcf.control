@@ -3,7 +3,7 @@
     public record PostUser(
         string Name,
         string Email,
-        string Password,
-        string Login
+        string? Password,
+        string? Login
     );
 }

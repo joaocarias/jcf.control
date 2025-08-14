@@ -7,6 +7,7 @@
 
         public const string _isActiveRow = "\"IsActive\" ";
         public const string _colId = "\"Id\"";
+        public const string _colName = "\"Name\"";
 
         public const string _selectFromAll = " SELECT * FROM ";
     }

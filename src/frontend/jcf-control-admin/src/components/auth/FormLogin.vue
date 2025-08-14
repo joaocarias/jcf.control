@@ -11,12 +11,17 @@
         </div>
         <div>
 
+            <!-- Mensagem de erro -->
+            <div v-if="errorMessage" class="mb-4 p-3 rounded bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200">
+               <font-awesome-icon :icon="['fas', 'triangle-exclamation']" /> {{ errorMessage }}
+            </div>
+
             <form @submit.prevent="handleSubmit">
                 <div class="space-y-5">
                     <!-- Email -->
                     <div>
                         <label for="email" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            E-mail<span class="text-error-500"> *</span>
+                            <font-awesome-icon :icon="['fas', 'envelope']" /> E-mail<span class="text-error-500"> *</span>
                         </label>
                         <input v-model="email" type="email" id="email" name="email" placeholder="info@gmail.com"
                             class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
@@ -24,7 +29,7 @@
                     <!-- Password -->
                     <div>
                         <label for="password" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            Password<span class="text-error-500"> *</span>
+                            <font-awesome-icon :icon="['fas', 'lock']" /> Password<span class="text-error-500"> *</span>
                         </label>
                         <div class="relative">
                             <input v-model="password" :type="showPassword ? 'text' : 'password'" id="password"
@@ -78,11 +83,10 @@
                     </div>
                     <!-- Button -->
                     <div>
-                        <button type="submit"
-                            :disabled="isLoading"
+                        <button type="submit" :disabled="isLoading"
                             class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <span v-if="!isLoading">{{ $t('SignIn') }}</span>
-                            <span v-else>{{ $t('WaitLogin') }}</span>
+                            <span v-if="!isLoading"> <font-awesome-icon :icon="['fas', 'right-from-bracket']" /> {{ $t('SignIn') }}</span>
+                            <span v-else> <font-awesome-icon :icon="['fas', 'spinner']" /> {{ $t('WaitLogin') }}</span>
                         </button>
                     </div>
                 </div>
@@ -116,31 +120,31 @@ const togglePasswordVisibility = () => {
 }
 
 const handleSubmit = async () => {
-  errorMessage.value = '' // limpa erro anterior
-  try {
-    isLoading.value = true
-    const response = await login(email.value, password.value);
-   
-    if (response.data?.isSuccess) {
-      const { token, user } = response.data.result
-      loginStorage(token, user) // armazena token e usuário
-      router.push('/home')
-    } else {
-      errorMessage.value = 'Erro desconhecido ao logar.'
-    }
-  } catch (err) {
-    const error = err as AxiosError<{ statusCode: number; errorMessages?: string[] }>;
-    if (error.response && error.response.data) {
-      const { statusCode, errorMessages } = error.response.data;
-      console.log(`statusCode: ${statusCode} | errorMessage: ${errorMessages?.[0] || 'Erro desconhecido'}`)
-       errorMessage.value = errorMessages?.[0] || 'Erro ao fazer login.'
-    } else {
-      errorMessage.value = 'Erro ao conectar com o servidor.'
-      console.error('Erro inesperado ao tentar logar:', error)
-    }
-  }
+    errorMessage.value = '' // limpa erro anterior
+    try {
+        isLoading.value = true
+        const response = await login(email.value, password.value);
 
-  isLoading.value = false;
+        if (response.data?.isSuccess) {
+            const { token, user } = response.data.result
+            loginStorage(token, user) // armazena token e usuário
+            router.push('/home')
+        } else {
+            errorMessage.value = 'Erro desconhecido ao logar.'
+        }
+    } catch (err) {
+        const error = err as AxiosError<{ statusCode: number; errorMessages?: string[] }>;
+        if (error.response && error.response.data) {
+            const { statusCode, errorMessages } = error.response.data;
+            console.log(`statusCode: ${statusCode} | errorMessage: ${errorMessages?.[0] || 'Erro desconhecido'}`)
+            errorMessage.value = errorMessages?.[0] || 'Erro ao fazer login.'
+        } else {
+            errorMessage.value = 'Erro ao conectar com o servidor.'
+            console.error('Erro inesperado ao tentar logar:', error)
+        }
+    }
+
+    isLoading.value = false;
 }
 
 </script>

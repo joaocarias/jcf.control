@@ -52,6 +52,7 @@ export class UserServices {
   // Criar novo usuário
   static async createUser(userData: Partial<User>): Promise<User> {
     try {
+      console.log('Dados do usuário a serem criados:', userData)
       const response = await api.post<ApiResponse<User>>('/User', userData, {
         headers: getAuthHeaders()
       })

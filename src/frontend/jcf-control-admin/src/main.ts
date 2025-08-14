@@ -5,6 +5,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'jsvectormap/dist/jsvectormap.css'
 import 'flatpickr/dist/flatpickr.css'
+import FontAwesomeIcon from './plugins/fontawesome'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -15,6 +16,8 @@ import VueApexCharts from 'vue3-apexcharts'
 import i18n from './i18n';
 
 const app = createApp(App)
+
+app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
 app.use(VueApexCharts as unknown as Plugin);

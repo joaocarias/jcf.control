@@ -2,7 +2,7 @@ export interface User {
     id: string
     name: string
     email: string
-    login: string
+    login: string 
     role: string
     firstName: string
     isActive: boolean
@@ -12,4 +12,5 @@ export interface User {
     updateAt: string | null
     userUpdate: string | null
     userUpdateId: string | null
+    password?: string | '10203040'
   }
