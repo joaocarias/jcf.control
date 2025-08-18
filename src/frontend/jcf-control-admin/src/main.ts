@@ -6,6 +6,8 @@ import 'swiper/css/pagination'
 import 'jsvectormap/dist/jsvectormap.css'
 import 'flatpickr/dist/flatpickr.css'
 import FontAwesomeIcon from './plugins/fontawesome'
+import FloatingVue from 'floating-vue'
+import 'floating-vue/dist/style.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -21,6 +23,7 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
 app.use(VueApexCharts as unknown as Plugin);
+app.use(FloatingVue)
 app.use(i18n);
 
 app.mount('#app')
