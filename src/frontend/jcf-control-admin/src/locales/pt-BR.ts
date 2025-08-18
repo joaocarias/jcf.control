@@ -15,7 +15,9 @@ const messages = {
   BtnSave: 'Salvar',
   BtnCancel: 'Cancelar',
   CreateAt: 'Data de Cadastro',
+  Delete: "Excluir",
   Email: 'E-mail',  
+  Edit: "Editar",
   forgotPassword: 'Esqueci minha senha',
   Inactive: 'Inativo',
   keepMeLoggedIn: 'Manter-me conectado',
@@ -30,7 +32,8 @@ const messages = {
   Registereds: "Lista de Cadastrados",  
   SignIn: 'Login',
   SignOut: 'Sair',
-  Users: 'Usuários', 
+  Users: 'Usuários',
+  View: 'Visualizar',
   WaitLogin: 'Aguarde...',
 };
 

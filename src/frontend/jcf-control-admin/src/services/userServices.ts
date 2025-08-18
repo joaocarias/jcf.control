@@ -57,6 +57,8 @@ export class UserServices {
         headers: getAuthHeaders()
       })
       
+      console.log('Resposta da criação do usuário:', response)
+
       if (response.data.isSuccess) {
         return response.data.result
       } else {
