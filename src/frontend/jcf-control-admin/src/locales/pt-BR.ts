@@ -16,6 +16,7 @@ const messages = {
   BtnCancel: 'Cancelar',
   CreateAt: 'Data de Cadastro',
   Delete: "Excluir",
+  Detail: 'Detalhar',
   Email: 'E-mail',  
   Edit: "Editar",
   forgotPassword: 'Esqueci minha senha',
@@ -33,6 +34,8 @@ const messages = {
   SignIn: 'Login',
   SignOut: 'Sair',
   Users: 'Usuários',
+  User: 'Usuário',
+
   View: 'Visualizar',
   WaitLogin: 'Aguarde...',
 };

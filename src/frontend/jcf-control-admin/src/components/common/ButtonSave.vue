@@ -37,6 +37,7 @@ const handleSave = async () => {
   try {
     await apiCall()
     alert('✅ Registro salvo com sucesso!')
+    onSuccess: 
     emit('success')
   } catch (err) {
     console.error(err)

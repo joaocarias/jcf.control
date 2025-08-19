@@ -61,19 +61,7 @@
               <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ formatDate(user.createAt) }}</p>
             </td>
             <td class="px-5 py-4 sm:px-6 space-x-3">
-              <RouterLink :to="`/registers/users/${user.id}`">
-                <font-awesome-icon icon="file-lines" class="cursor-pointer hover:text-blue-500 ml-3" v-tooltip="$t('View')" />
-              </RouterLink>
-
-              <!-- Editar -->
-              <RouterLink :to="`/registers/users/edit/${user.id}`">
-                <font-awesome-icon icon="file-pen" class="cursor-pointer hover:text-green-500 ml-3" v-tooltip="$t('Edit')" />
-              </RouterLink>
-
-              <!-- Excluir -->
-              <RouterLink :to="`/registers/users/remove/${user.id}`">
-                <font-awesome-icon icon="trash-can" class="cursor-pointer hover:text-red-500 ml-3" v-tooltip="$t('Delete')" />
-              </RouterLink>
+              <ButtonsActions :id="user.id" :url-base="_urlBase" :routesEnables="['View', 'Edit', 'Delete']" />
             </td>
           </tr>
         </tbody>
@@ -87,10 +75,12 @@ import { ref, onMounted } from 'vue'
 import { UserServices } from '@/services/userServices'
 import type { User } from '@/interfaces/Models/User'
 import { formatDate } from '@/utils/dateFormatter';
+import ButtonsActions from '@/components/common/ButtonsActionsTableList.vue'
 
 const users = ref<User[]>([])
 const loading = ref(false)
 const error = ref('')
+const _urlBase = '/registers/users';
 
 // Carregar usuários
 const loadUsers = async () => {
