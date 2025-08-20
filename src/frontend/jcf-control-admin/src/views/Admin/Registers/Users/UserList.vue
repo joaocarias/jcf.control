@@ -7,7 +7,6 @@
         <template #actionBtnAdd>
           <ButtonAdd to="/registers/users/create" />
         </template>
-
         <ListTable />
       </ComponentCard>
     </div>

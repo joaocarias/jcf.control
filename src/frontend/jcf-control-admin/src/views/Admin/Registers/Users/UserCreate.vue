@@ -5,7 +5,7 @@
       <div class="space-y-6">
        
         <ComponentCard :title="$t(titlePage)">
-          <UserCreateForm v-model="formData"/>
+          <UserForm v-model="formData"/>
           <ButtonSave
             :apiCall="saveUser"
             :label="$t('Save')"
@@ -27,7 +27,7 @@ import { useRouter } from 'vue-router'
 import { UserServices }  from '@/services/userServices'
 
 import ComponentCard from '@/components/common/ComponentCard.vue'
-import UserCreateForm from '@/components/admin/register/user/UserCreateForm.vue'
+import UserForm from '@/components/admin/register/user/UserForm.vue'
 
 import { useI18n } from 'vue-i18n'
 import ButtonSave from '@/components/common/ButtonSave.vue'

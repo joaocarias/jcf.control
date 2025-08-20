@@ -142,9 +142,8 @@ const handleSubmit = async () => {
             errorMessage.value = 'Erro ao conectar com o servidor.'
             console.error('Erro inesperado ao tentar logar:', error)
         }
-    }
-
-    isLoading.value = false;
+        isLoading.value = false;
+    }    
 }
 
 </script>

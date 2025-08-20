@@ -53,6 +53,15 @@ export const routes: RouteRecordRaw[] = [
         meta: {
           title: `Usuário | ${APP_TITLE}`
         }
+      },
+      {
+        path: ':id/edit',
+        name: 'Users Edit',
+        component: () => import('@/views/Admin/Registers/Users/UserEdit.vue'),
+        props: true,
+        meta: {
+          title: `Usuário | ${APP_TITLE}`
+        }
       }
     ]
   }

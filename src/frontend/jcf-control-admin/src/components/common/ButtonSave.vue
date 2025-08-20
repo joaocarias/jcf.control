@@ -1,12 +1,8 @@
 <template>
-  <button
-    type="button"
-    :disabled="loading"
-    @click="handleSave"
-    class="flex items-center justify-center px-4 py-2 text-white rounded-lg bg-brand-500 hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed"
-  >
+  <button type="button" :disabled="loading" @click="handleSave"
+    class="flex items-center justify-center px-4 py-2 text-white rounded-lg bg-brand-500 hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed">
     <span v-if="!loading">
-      <font-awesome-icon icon="save" /> 
+      <font-awesome-icon icon="save" />
       {{ label }}
     </span>
     <span v-else>
@@ -18,7 +14,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const { apiCall }  = defineProps<{
+const { apiCall } = defineProps<{
   apiCall: () => Promise<unknown>
   label?: string
   onSuccess?: () => void | undefined
@@ -37,7 +33,7 @@ const handleSave = async () => {
   try {
     await apiCall()
     alert('✅ Registro salvo com sucesso!')
-    onSuccess: 
+    onSuccess:
     emit('success')
   } catch (err) {
     console.error(err)

@@ -1,5 +1,10 @@
 <template>
-  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+  <div v-if="loading">
+    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $t('Loading...') }}</p>
+  </div>
+
+  <div v-else
+    class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
     <div class="max-w-full overflow-x-auto custom-scrollbar">
       <table class="min-w-full">
         <thead>
