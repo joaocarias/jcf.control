@@ -1,5 +1,8 @@
 <template>
-  <div v-if="user">
+  <div v-if="loading">
+    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $t('Loading...') }}</p>
+  </div>
+  <div v-else-if="user">
 
     <div class="p-5 mb-6 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
       <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
@@ -59,7 +62,7 @@
           </div>
         </div>
 
-       <button-edit :to="to" />
+        <button-edit :to="to" />
       </div>
     </div>
 
@@ -79,10 +82,10 @@
         </div>
       </div>
     </div>
-</div>
-<div v-else>
-  <error-message />
-</div>
+  </div>
+  <div v-else>
+    <error-message />
+  </div>
 </template>
 
 <script setup lang="ts">
