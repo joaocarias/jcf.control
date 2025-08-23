@@ -11,19 +11,17 @@
   </button>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"  generic="T">
 import { ref } from 'vue'
 
 const { apiCall } = defineProps<{
-  apiCall: () => Promise<unknown>
+  apiCall: () => Promise<T>
   label?: string
-  onSuccess?: () => void | undefined
-  onError?: (err: unknown) => void | undefined
 }>()
 
 const emit = defineEmits<{
-  (e: 'success'): void
-  (e: 'error', err: unknown): void
+  success: [T]
+  error: [unknown]
 }>()
 
 const loading = ref(false)
@@ -31,10 +29,10 @@ const loading = ref(false)
 const handleSave = async () => {
   loading.value = true
   try {
-    await apiCall()
+    const result = await apiCall()
     alert('✅ Registro salvo com sucesso!')
     onSuccess:
-    emit('success')
+    emit('success', result)
   } catch (err) {
     console.error(err)
     alert('❌ Ocorreu um erro ao salvar.')

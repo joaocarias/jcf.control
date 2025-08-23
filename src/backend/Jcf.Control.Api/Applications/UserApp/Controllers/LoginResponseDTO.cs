@@ -6,8 +6,8 @@
         {
         }
 
-        public object? User { get; set; }
-        public string Token { get; set; }
+        public object? Result { get; set; } 
+        public string Token { get; set; } = string.Empty;
         public bool IsSuccess { get; set; } = true;
     }
 }

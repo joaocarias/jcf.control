@@ -60,6 +60,7 @@ export class UserServices {
       console.log('Resposta da criação do usuário:', response)
 
       if (response.data.isSuccess) {
+        console.log('Usuário criado com sucesso:', response.data.result)
         return response.data.result
       } else {
         throw new Error('Erro ao criar usuário')

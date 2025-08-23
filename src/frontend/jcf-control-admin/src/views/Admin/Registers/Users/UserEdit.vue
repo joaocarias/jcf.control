@@ -12,7 +12,7 @@
                     <div v-else-if="user">
 
                         <UserForm v-model="formData" />
-                        <ButtonSave :apiCall="saveUser" :label="$t('Save')" @success="router.push(to)" />
+                        <ButtonSave :apiCall="saveUser" :label="$t('Save')" @success="(user) => router.push(`/registers/users/${user.id}`)" />
 
                     </div>
                     <div v-else>
@@ -48,7 +48,6 @@ const route = useRoute()
 
 const loading = ref(false)
 const user = ref<User>();
-let to = ``;
 
 const titlePage = t('Edit')
 const currentPageTitle = ref(t("Users"));
@@ -56,7 +55,7 @@ const currentPageTitle = ref(t("Users"));
 const formData = ref({ id: '', name: '', email: '' })
 let _id = ''
 
-const saveUser = async () => {
+const saveUser = async (): Promise<User> => {
     const user = await UserServices.updateUser(_id, formData.value)
     return user
 }
@@ -64,7 +63,6 @@ const saveUser = async () => {
 const loadUser = async (id: string) => {
     try {
         user.value = await UserServices.getUserById(id)
-        to = `/registers/users/${user.value.id}/edit`;
         formData.value = {
             id: user.value.id,
             name: user.value.name,

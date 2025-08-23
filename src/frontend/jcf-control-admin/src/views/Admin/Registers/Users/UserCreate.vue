@@ -9,7 +9,7 @@
           <ButtonSave
             :apiCall="saveUser"
             :label="$t('Save')"
-            @success="router.push('/registers/users')"          
+            @success="(user) => router.push(`/registers/users/${user.id}`)"          
           />
         </ComponentCard>
        
@@ -31,6 +31,7 @@ import UserForm from '@/components/admin/register/user/UserForm.vue'
 
 import { useI18n } from 'vue-i18n'
 import ButtonSave from '@/components/common/ButtonSave.vue'
+import type { User } from '@/interfaces/Models/User'
 
 const { t } = useI18n();
 const router = useRouter()
@@ -40,7 +41,7 @@ const currentPageTitle = ref(t("Usuários"));
 
 const formData = ref({ name: '', email: '' })
 
-const saveUser = async () => {
+const saveUser = async (): Promise<User> => {
   const user = await UserServices.createUser(formData.value)
   return user 
 }

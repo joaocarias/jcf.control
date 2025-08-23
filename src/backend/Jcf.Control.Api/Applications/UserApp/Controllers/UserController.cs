@@ -89,7 +89,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
                     return BadRequest(response);
                 }
 
-                return CreatedAtAction(nameof(Get), new { id = user.Id }, new LoginResponseDTO() { User = user.ToDTO(), Token = string.Empty });
+                return CreatedAtAction(nameof(Get), new { id = user.Id }, new LoginResponseDTO() { Result = user.ToDTO(), Token = string.Empty });
 
             }
             catch (Exception ex)
@@ -120,7 +120,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
                 }
 
                 user = _userService.Update(user, editUser, GetUserIdFromToken());
-                return CreatedAtAction(nameof(Get), new { id = user?.Id }, new LoginResponseDTO() { User = user?.ToDTO(), Token = string.Empty });
+                return CreatedAtAction(nameof(Get), new { id = user?.Id }, new LoginResponseDTO() { Result = user?.ToDTO(), Token = string.Empty });
 
             }
             catch (Exception ex)
