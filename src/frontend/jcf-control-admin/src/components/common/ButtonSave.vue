@@ -11,7 +11,7 @@
   </button>
 </template>
 
-<script setup lang="ts"  generic="T">
+<script setup lang="ts" generic="T">
 import { ref } from 'vue'
 
 const { apiCall } = defineProps<{

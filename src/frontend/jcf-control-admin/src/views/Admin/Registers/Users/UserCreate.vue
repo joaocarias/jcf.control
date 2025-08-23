@@ -3,18 +3,15 @@
     <PageBreadcrumb :pageTitle="currentPageTitle" />
     <div class="grid grid-cols-1 gap-6 ">
       <div class="space-y-6">
-       
+
         <ComponentCard :title="$t(titlePage)">
-          <UserForm v-model="formData"/>
-          <ButtonSave
-            :apiCall="saveUser"
-            :label="$t('Save')"
-            @success="(user) => router.push(`/registers/users/${user.id}`)"          
-          />
+          <UserForm v-model="formData" />
+          <ButtonSave :apiCall="saveUser" :label="$t('Save')"
+            @success="(user) => router.push(`/registers/users/${user.id}`)" />
         </ComponentCard>
-       
+
       </div>
-     
+
     </div>
   </AdminLayout>
 </template>
@@ -24,7 +21,7 @@ import { ref } from 'vue'
 import PageBreadcrumb from '@/components/common/PageBreadcrumb.vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import { useRouter } from 'vue-router'
-import { UserServices }  from '@/services/userServices'
+import { UserServices } from '@/services/userServices'
 
 import ComponentCard from '@/components/common/ComponentCard.vue'
 import UserForm from '@/components/admin/register/user/UserForm.vue'
@@ -43,7 +40,7 @@ const formData = ref({ name: '', email: '' })
 
 const saveUser = async (): Promise<User> => {
   const user = await UserServices.createUser(formData.value)
-  return user 
+  return user
 }
 
 </script>

@@ -92,7 +92,10 @@ namespace Jcf.Control.Api.Applications.UserApp.Services
                 if(!user.Id.ValidadeIsEquals(putUser.Id))
                     return null;
 
-                user.Edit(putUser.Name, putUser.Email, PasswordUtil.CreateHashMD5(putUser.Password), putUser.Login, userUpdateId);
+                string _password = string.IsNullOrEmpty(putUser.Password) ? user.Password : PasswordUtil.CreateHashMD5(putUser.Password);
+                string _login = string.IsNullOrEmpty(putUser.Login) ? user.Login : putUser.Login;
+
+                user.Edit(putUser.Name, putUser.Email, _password, _login, userUpdateId);
                 return _userRepository.Update(user);
             }
             catch (Exception ex)

@@ -1,5 +1,4 @@
 <template>
-
     <AdminLayout>
         <PageBreadcrumb :pageTitle="currentPageTitle" />
         <div class="grid grid-cols-1 gap-6 ">
@@ -12,7 +11,8 @@
                     <div v-else-if="user">
 
                         <UserForm v-model="formData" />
-                        <ButtonSave :apiCall="saveUser" :label="$t('Save')" @success="(user) => router.push(`/registers/users/${user.id}`)" />
+                        <ButtonSave :apiCall="saveUser" :label="$t('Save')"
+                            @success="(user) => router.push(`/registers/users/${user.id}`)" />
 
                     </div>
                     <div v-else>
@@ -56,7 +56,9 @@ const formData = ref({ id: '', name: '', email: '' })
 let _id = ''
 
 const saveUser = async (): Promise<User> => {
+    console.log('Saving user with data:', formData.value)
     const user = await UserServices.updateUser(_id, formData.value)
+    console.log('User saved:', user)
     return user
 }
 
@@ -68,6 +70,7 @@ const loadUser = async (id: string) => {
             name: user.value.name,
             email: user.value.email
         }
+        _id = user.value.id
     } catch (err) {
         console.error('Erro ao carregar usuário:', err)
     } finally {
