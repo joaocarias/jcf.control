@@ -62,7 +62,11 @@
           </div>
         </div>
 
-        <button-edit :to="to" />
+        <div class="flex flex-col space-y-2">
+          <button-edit :to="to" />
+          <button-delete />
+        </div>
+
       </div>
     </div>
 
@@ -97,6 +101,7 @@ import { useRoute } from 'vue-router'
 import { formatDate } from '@/utils/dateFormatter';
 import ErrorMessage from '@/components/common/ErrorMessage.vue';
 import ButtonEdit from '@/components/common/ButtonEdit.vue';
+import ButtonDelete from '@/components/common/ButtonDelete.vue';
 
 const route = useRoute()
 
