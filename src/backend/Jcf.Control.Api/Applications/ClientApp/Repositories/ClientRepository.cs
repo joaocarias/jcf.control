@@ -2,7 +2,6 @@
 using Jcf.Control.Api.Applications.ClientApp.Entities;
 using Jcf.Control.Api.Applications.ClientApp.Queries;
 using Jcf.Control.Api.Applications.ClientApp.Repositories.IRepositories;
-using Jcf.Control.Api.Applications.UserApp.Queries;
 using Jcf.Control.Api.Core.Entities;
 using Jcf.Control.Api.Data.Contexts;
 
@@ -86,6 +85,20 @@ namespace Jcf.Control.Api.Applications.ClientApp.Repositories
             {
                 _logger.LogError($"{nameof(ClientRepository)} | {nameof(GetByIdAsync)} | Error: {ex.Message}");
                 return null;
+            }
+        }
+
+        public async Task<IEnumerable<Client>?> GetByPageAsync(int page = 1, int pageSize = 10)
+        {
+            try
+            {
+                var result = await _appDapperContext.Connection.QueryAsync<Client>(ClientQuery.GET_ALL, null, _appDapperContext.Transaction);
+                return result ?? Enumerable.Empty<Client>();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(ClientRepository)} | {nameof(GetAllAsync)} | Error: {ex.Message}");
+                return Enumerable.Empty<Client>();
             }
         }
 

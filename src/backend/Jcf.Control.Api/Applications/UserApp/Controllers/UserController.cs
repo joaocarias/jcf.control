@@ -53,7 +53,31 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int page = 1, int pageSize = 10)
+        {
+            var response = new ApiResponse();
+            try
+            {
+                var users = await _userService.GetByPageAsync(page, pageSize);
+                if (users is null)
+                {
+                    response.IsNotFound();
+                    return NotFound(response);
+                }
+
+                response.IsOk(users.Select(x => x.ToDTO()));
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"[{nameof(UserController)} - {nameof(Get)}] | {ex.Message}");
+                response.IsBadRequest(ex.Message);
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
             var response = new ApiResponse();
             try

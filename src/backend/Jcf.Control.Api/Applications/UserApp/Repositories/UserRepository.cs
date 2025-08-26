@@ -3,7 +3,7 @@ using Jcf.Control.Api.Applications.AuthenticationApp.Services;
 using Jcf.Control.Api.Applications.UserApp.Entities;
 using Jcf.Control.Api.Applications.UserApp.Queries;
 using Jcf.Control.Api.Applications.UserApp.Repositories.IRepositories;
-using Jcf.Control.Api.Applications.UserApp.Services;
+using Jcf.Control.Api.Core.Uteis;
 using Jcf.Control.Api.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -96,6 +96,22 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
             {
                 _logger.LogError($"{nameof(UserRepository)} | {nameof(GetByIdAsync)} | Error: {ex.Message}");
                 return null;
+            }
+        }
+
+        public async Task<IEnumerable<User>?> GetByPageAsync(int page = 1, int pageSize = 10)
+        {
+            try
+            {
+                var pagination = PaginationUtil.GetPagination(page, pageSize);
+
+                var result = await _appDapperContext.Connection.QueryAsync<User>(UserQuery.GET_ALL, null, _appDapperContext.Transaction);
+                return result ?? Enumerable.Empty<User>();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(UserRepository)} | {nameof(GetByPageAsync)} | Error: {ex.Message}");
+                return Enumerable.Empty<User>();
             }
         }
 

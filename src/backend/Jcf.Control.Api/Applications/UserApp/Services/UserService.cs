@@ -85,6 +85,19 @@ namespace Jcf.Control.Api.Applications.UserApp.Services
             }
         }
 
+        public async Task<IEnumerable<User>?> GetByPageAsync(int page = 1, int pageSize = 10)
+        {
+            try
+            {
+                return await _userRepository.GetByPageAsync(page, pageSize);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"[{nameof(UserService)} - {nameof(GetByPageAsync)}] | {ex.Message}");
+                return Enumerable.Empty<User>();
+            }
+        }
+
         public User? Update(User user, PutUser putUser, Guid? userUpdateId)
         {
             try
