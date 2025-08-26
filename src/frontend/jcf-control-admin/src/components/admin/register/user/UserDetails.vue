@@ -64,7 +64,7 @@
 
         <div class="flex flex-col space-y-2">
           <button-edit :to="to" />
-          <button-delete />
+          <button-delete @click="showModal=true" />
         </div>
 
       </div>
@@ -90,6 +90,12 @@
   <div v-else>
     <error-message />
   </div>
+
+  <delete-modal 
+    v-model="showModal"
+      entityName="usuário"
+      @confirm="deleteUser"
+  />
 </template>
 
 <script setup lang="ts">
@@ -97,15 +103,18 @@
 import { ref, onMounted } from 'vue'
 import { UserServices } from '@/services/userServices'
 import type { User } from '@/interfaces/Models/User'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { formatDate } from '@/utils/dateFormatter';
 import ErrorMessage from '@/components/common/ErrorMessage.vue';
 import ButtonEdit from '@/components/common/ButtonEdit.vue';
 import ButtonDelete from '@/components/common/ButtonDelete.vue';
+import DeleteModal from '@/components/common/DeleteModal.vue';
 
 const route = useRoute()
+const router = useRouter()
 
 const user = ref<User>();
+const showModal = ref(false)
 
 const loading = ref(false)
 const error = ref('')
@@ -130,5 +139,18 @@ onMounted(() => {
   const id = route.params.id as string
   loadUser(id)
 })
+
+const deleteUser = async () => {
+  try{
+    if (user.value) {
+       await UserServices.deleteUser(user.value.id);
+    }    
+    alert('✅ Registro excluído com sucesso!')
+    router.push(`/registers/users`)
+  }catch(err){
+    console.error(err);
+    alert('Não foi possível Excluir')
+  }  
+}
 
 </script>

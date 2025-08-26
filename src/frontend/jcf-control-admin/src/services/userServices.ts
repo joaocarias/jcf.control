@@ -52,15 +52,11 @@ export class UserServices {
   // Criar novo usuário
   static async createUser(userData: Partial<User>): Promise<User> {
     try {
-      console.log('Dados do usuário a serem criados:', userData)
       const response = await api.post<ApiResponse<User>>('/User', userData, {
         headers: getAuthHeaders()
       })
       
-      console.log('Resposta da criação do usuário:', response)
-
       if (response.data.isSuccess) {
-        console.log('Usuário criado com sucesso:', response.data.result)
         return response.data.result
       } else {
         throw new Error('Erro ao criar usuário')
@@ -99,6 +95,7 @@ export class UserServices {
       if (!response.data.isSuccess) {
         throw new Error('Erro ao deletar usuário')
       }
+      
     } catch (error) {
       console.error('Erro ao deletar usuário:', error)
       throw error
