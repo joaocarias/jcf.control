@@ -10,5 +10,7 @@
         public const string _colName = "\"Name\"";
 
         public const string _selectFromAll = " SELECT * FROM ";
+        public const string _selectCount = $"SELECT COUNT({_colId}) FROM ";
+
     }
 }

@@ -3,6 +3,7 @@ using Jcf.Control.Api.Applications.AuthenticationApp.Services;
 using Jcf.Control.Api.Applications.UserApp.Entities;
 using Jcf.Control.Api.Applications.UserApp.Queries;
 using Jcf.Control.Api.Applications.UserApp.Repositories.IRepositories;
+using Jcf.Control.Api.Core.Models;
 using Jcf.Control.Api.Core.Uteis;
 using Jcf.Control.Api.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -99,19 +100,29 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
             }
         }
 
-        public async Task<IEnumerable<User>?> GetByPageAsync(int page = 1, int pageSize = 10)
+        public async Task<PageList<User>?> GetByPageAsync(int page = 1, int pageSize = 10)
         {
             try
             {
-                var pagination = PaginationUtil.GetPagination(page, pageSize);
+                var (Offset, PageSize) = PaginationUtil.GetPagination(page, pageSize);
+                var query = $" {UserQuery.GET_PAGINATE} \n {UserQuery.GET_COUNT} ";
 
-                var result = await _appDapperContext.Connection.QueryAsync<User>(UserQuery.GET_ALL, null, _appDapperContext.Transaction);
-                return result ?? Enumerable.Empty<User>();
+
+                using var multi = await _appDapperContext.Connection.QueryMultipleAsync(
+                            query,
+                            new { Offset, PageSize = pageSize },
+                            _appDapperContext.Transaction
+                        );
+
+                var list = await multi.ReadAsync<User>();
+                var count = await multi.ReadFirstAsync<int>();
+
+                return new PageList<User>(list, page, pageSize, count);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{nameof(UserRepository)} | {nameof(GetByPageAsync)} | Error: {ex.Message}");
-                return Enumerable.Empty<User>();
+                return new PageList<User>(new List<User>(), 0, 0, 0));
             }
         }
 
