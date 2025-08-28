@@ -3,6 +3,7 @@ using Jcf.Control.Api.Applications.UserApp.Models.Records;
 using Jcf.Control.Api.Applications.UserApp.Repositories.IRepositories;
 using Jcf.Control.Api.Applications.UserApp.Services.IServices;
 using Jcf.Control.Api.Core.Extensions;
+using Jcf.Control.Api.Core.Models;
 using Jcf.Control.Api.Core.Uteis;
 
 namespace Jcf.Control.Api.Applications.UserApp.Services
@@ -85,7 +86,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Services
             }
         }
 
-        public async Task<IEnumerable<User>?> GetByPageAsync(int page = 1, int pageSize = 10)
+        public async Task<PageList<User>?> GetByPageAsync(int page = 1, int pageSize = 10)
         {
             try
             {
@@ -94,7 +95,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Services
             catch (Exception ex)
             {
                 _logger.LogError($"[{nameof(UserService)} - {nameof(GetByPageAsync)}] | {ex.Message}");
-                return Enumerable.Empty<User>();
+                return new PageList<User>(Enumerable.Empty<User>(), 0,0,0);
             }
         }
 

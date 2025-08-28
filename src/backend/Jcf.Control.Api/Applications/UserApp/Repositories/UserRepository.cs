@@ -105,12 +105,13 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
             try
             {
                 var (Offset, PageSize) = PaginationUtil.GetPagination(page, pageSize);
-                var query = $" {UserQuery.GET_PAGINATE} \n {UserQuery.GET_COUNT} ";
+                var query = $" {UserQuery.GET_PAGINATE} ;\n {UserQuery.GET_COUNT} ";
 
+                Console.WriteLine(query);
 
                 using var multi = await _appDapperContext.Connection.QueryMultipleAsync(
                             query,
-                            new { Offset, PageSize = pageSize },
+                            new { Offset, Limit = PageSize },
                             _appDapperContext.Transaction
                         );
 
@@ -122,7 +123,7 @@ namespace Jcf.Control.Api.Applications.UserApp.Repositories
             catch (Exception ex)
             {
                 _logger.LogError($"{nameof(UserRepository)} | {nameof(GetByPageAsync)} | Error: {ex.Message}");
-                return new PageList<User>(new List<User>(), 0, 0, 0));
+                return new PageList<User>(Enumerable.Empty<User>(), 0, 0, 0);
             }
         }
 

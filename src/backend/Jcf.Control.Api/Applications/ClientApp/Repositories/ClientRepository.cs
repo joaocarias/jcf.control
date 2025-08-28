@@ -3,6 +3,8 @@ using Jcf.Control.Api.Applications.ClientApp.Entities;
 using Jcf.Control.Api.Applications.ClientApp.Queries;
 using Jcf.Control.Api.Applications.ClientApp.Repositories.IRepositories;
 using Jcf.Control.Api.Core.Entities;
+using Jcf.Control.Api.Core.Models;
+using Jcf.Control.Api.Core.Repositories.IRepositories;
 using Jcf.Control.Api.Data.Contexts;
 
 namespace Jcf.Control.Api.Applications.ClientApp.Repositories
@@ -116,6 +118,11 @@ namespace Jcf.Control.Api.Applications.ClientApp.Repositories
                 _logger.LogError($"[{nameof(ClientRepository)} - {nameof(Update)}] | {ex.Message}");
                 return null;
             }
+        }
+
+        Task<PageList<Client>?> IRepositoryBase<Client>.GetByPageAsync(int page, int pageSize)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Jcf.Control.Api.Applications.UserApp.Entities;
+using Jcf.Control.Api.Applications.UserApp.Models.DTOs;
 using Jcf.Control.Api.Applications.UserApp.Models.Records;
 using Jcf.Control.Api.Applications.UserApp.Services.IServices;
 using Jcf.Control.Api.Core.Constants;
 using Jcf.Control.Api.Core.Controllers;
+using Jcf.Control.Api.Core.Models;
 using Jcf.Control.Api.Core.Models.Responses;
 using Jcf.Control.Api.Core.Uteis;
 using Microsoft.AspNetCore.Mvc;
@@ -52,13 +54,13 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get(int page = 1, int pageSize = 10)
+        [HttpGet("[Action]")]
+        public async Task<IActionResult> GetAll()
         {
             var response = new ApiResponse();
             try
             {
-                var users = await _userService.GetByPageAsync(page, pageSize);
+                var users = await _userService.GetAllAsync();
                 if (users is null)
                 {
                     response.IsNotFound();
@@ -77,19 +79,25 @@ namespace Jcf.Control.Api.Applications.UserApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetList(int page = 1, int pageSize = 10)
         {
             var response = new ApiResponse();
             try
             {
-                var users = await _userService.GetAllAsync();
-                if (users is null)
+                var pageList = await _userService.GetByPageAsync(page, pageSize);
+                if (pageList is null)
                 {
                     response.IsNotFound();
                     return NotFound(response);
                 }
-
-                response.IsOk(users.Select(x => x.ToDTO()));
+                                
+                response.IsOk(new PageList<UserDTO>(
+                            list: pageList.List.Select(x => x.ToDTO()),
+                            page: pageList.Page,
+                            pageSize: pageList.PageSize,
+                            total: pageList.Total)
+                        );
+                
                 return Ok(response);
             }
             catch (Exception ex)
